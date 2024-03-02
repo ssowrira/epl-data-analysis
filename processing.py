@@ -59,15 +59,20 @@ def getTable(season_end_year: int, wk=42):
     
     return table
 
+def relegated(season_end_year: int):
+    """
+    list of teams relegated that season
+    """
+    table = getTable(season_end_year)
+    return [table.iloc[-3].Team, table.iloc[-2].Team, table.iloc[-1].Team]
 
-def relegated():
-    pass
-
-def promoted():
-    pass
-
-def getTotalWins():
-    pass
-
-def talking():
-    return 'Hello'
+def promoted(season_end_year: int):
+    """
+    list of teams promoted that season
+    """
+    if season_end_year == 1993:
+        return ['Ipswich Town', 'Middlesbrough', 'Blackburn']
+    else:
+        prev_teams = list(getTable(season_end_year-1)['Team'])
+        cur_teams = list(getTable(season_end_year)['Team'])
+        return [team for team in cur_teams if team not in prev_teams]
